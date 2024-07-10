@@ -16,8 +16,8 @@ on:
 
 env:
   AZURE_RESOURCE_GROUP: Test-Azure-POC  # target resource, must match the {resource-group-name} you setup in the pre-requisties
-  WEB_APP_NAME: app-todo-sample         # set the name for the Web App on Azure
-  CONTAINER_IMAGE_NAME: app-todo-sample # set the name for the container image 
+  WEB_APP_NAME: test-azure-poc-01         # set the name for the Web App on Azure
+  CONTAINER_IMAGE_NAME: test-azure-poc # set the name for the container image 
   ACR_NAME: testazurepoc               # set the name for the Azure Container Registry
   ACR_LOGIN_SERVER: testazurepoc.azurecr.io # fqdn for the Azure Container Registry
   ACR_USERNAME: ${{ secrets.ACR_USERNAME }} # user name for accessing Azure Container Registry
@@ -30,7 +30,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    environment:
+      name: 'dev'
     steps:
       - uses: actions/checkout@v4
 
@@ -59,11 +60,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
+      name: 'dev'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
     - name: Checkout Source Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
@@ -71,4 +72,4 @@ jobs:
       with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
+          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ github.sha }}
