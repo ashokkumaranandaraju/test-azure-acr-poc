@@ -16,7 +16,7 @@ on:
 
 env:
   AZURE_RESOURCE_GROUP: Test-Azure-POC  # target resource, must match the {resource-group-name} you setup in the pre-requisties
-  WEB_APP_NAME: test-azure-poc-01         # set the name for the Web App on Azure
+  WEB_APP_NAME: test-azure-poc-03         # set the name for the Web App on Azure
   CONTAINER_IMAGE_NAME: test-azure-poc # set the name for the container image 
   ACR_NAME: testazurepoc               # set the name for the Azure Container Registry
   ACR_LOGIN_SERVER: testazurepoc.azurecr.io # fqdn for the Azure Container Registry
