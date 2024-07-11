@@ -16,12 +16,12 @@ on:
 
 env:
   AZURE_RESOURCE_GROUP: Test-Azure-POC  # target resource, must match the {resource-group-name} you setup in the pre-requisties
-  WEB_APP_NAME: test-azure-poc-04        # set the name for the Web App on Azure
+  WEB_APP_NAME: test-azure-poc-03         # set the name for the Web App on Azure
   CONTAINER_IMAGE_NAME: test-azure-poc # set the name for the container image 
-  ACR_NAME: testazurepoc01               # set the name for the Azure Container Registry
-  ACR_LOGIN_SERVER: testazurepoc01.azurecr.io # fqdn for the Azure Container Registry
-  ACR_USERNAME: ${{ secrets.ACR_USERNAME_01 }} # user name for accessing Azure Container Registry
-  ACR_PASSWORD: ${{ secrets.ACR_PASSWORD_01 }} # password for accesing the Azure Container Registry
+  ACR_NAME: testazurepoc               # set the name for the Azure Container Registry
+  ACR_LOGIN_SERVER: testazurepoc.azurecr.io # fqdn for the Azure Container Registry
+  ACR_USERNAME: ${{ secrets.ACR_USERNAME }} # user name for accessing Azure Container Registry
+  ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }} # password for accesing the Azure Container Registry
 
 permissions:
   id-token: write
@@ -76,5 +76,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_04 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ github.sha }}
